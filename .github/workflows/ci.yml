@@ -1,0 +1,58 @@
+# GitHub Actions CI/CD Workflow for the Vertex AI FastAPI Project
+
+name: Python CI
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # This job runs tests and linting
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Python 3.12
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 3. Install Poetry
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      # 4. Cache dependencies to speed up future runs
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      # 5. Install dependencies using Poetry
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      # 6. Run the linter (Ruff)
+      - name: Run linter
+        run: |
+          source .venv/bin/activate
+          ruff check .
+
+      # 7. Run tests with Pytest (will be created in the next step)
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          pytest

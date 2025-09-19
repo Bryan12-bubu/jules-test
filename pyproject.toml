@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "vertex-ai-project"
+version = "0.1.0"
+description = "A FastAPI project to generate images and videos using Vertex AI with cost control."
+authors = ["Jules <jules@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "app", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.116.2"
+uvicorn = {extras = ["standard"], version = "^0.35.0"}
+google-cloud-aiplatform = "^1.115.0"
+pillow = "^11.3.0"
+pydantic-settings = "^2.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.13.1,<0.14.0)",
+    "pytest (>=8.4.2,<9.0.0)",
+    "pytest-mock (>=3.15.1,<4.0.0)"
+]
