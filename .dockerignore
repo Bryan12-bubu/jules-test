@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Poetry / Python
+.venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment files
+.env
+*.env.local
+
+# Test files and cache
+tests/
+.pytest_cache/
+coverage.xml
+htmlcov/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+
+# README (not needed in production image)
+README.md

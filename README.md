@@ -130,3 +130,28 @@ This will return a placeholder MP4 file.
     ```
 
 -   **CI/CD**: The repository includes a GitHub Actions workflow in `.github/workflows/ci.yml`. It automatically runs the linter (`ruff`) and the test suite on every push and pull request to the `main` branch.
+
+## 🐳 Docker
+
+This project includes a `Dockerfile` for easy containerization.
+
+### Build the Docker Image
+
+To build the Docker image, run the following command from the project root:
+
+```bash
+docker build -t vertex-ai-api .
+```
+
+### Run the Docker Container
+
+Once the image is built, you can run it as a container. You must provide your `.env` file to the container for configuration.
+
+```bash
+docker run --rm -p 8000:8000 --env-file .env vertex-ai-api
+```
+-   `--rm`: Automatically removes the container when it exits.
+-   `-p 8000:8000`: Maps port 8000 on your host to port 8000 in the container.
+-   `--env-file .env`: Provides the `.env` file to the container, which is necessary for the application to get its settings (like your GCP Project ID).
+
+The service will then be accessible at `http://localhost:8000`.

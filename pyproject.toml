@@ -19,9 +19,15 @@ pydantic-settings = "^2.10.1"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[dependency-groups]
-dev = [
-    "ruff (>=0.13.1,<0.14.0)",
-    "pytest (>=8.4.2,<9.0.0)",
-    "pytest-mock (>=3.15.1,<4.0.0)"
+[tool.pytest.ini_options]
+env = [
+    "GCP_PROJECT_ID=test-project-from-config",
+    "IMAGE_GENERATION_MODEL=test-image-model-from-config",
+    "VIDEO_GENERATION_MODEL=test-video-model-from-config"
 ]
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.13.1"
+pytest = "^8.4.2"
+pytest-mock = "^3.15.1"
+pytest-env = "^1.1.5"
